@@ -4,6 +4,9 @@ import SiderBar from 'components/SiderBar';
 import PageLogin from 'features/Auth/Login';
 import { Suspense } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import './App.scss';
+import 'simplebar';
+import 'simplebar/dist/simplebar.css';
 
 function App() {
     return (

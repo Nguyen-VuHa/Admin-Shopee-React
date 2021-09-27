@@ -213,6 +213,17 @@
             .item-table:hover {
                 background: rgba(56, 153, 236, .3);
             }
+
+            .item-table.not-product h3{
+                width: 100%;
+                text-align: center;
+                margin-top: 20px;
+                font-size: 20px;
+            }
+
+            .item-table.not-product:hover {
+                background: transparent;
+            }
         }
     }
 

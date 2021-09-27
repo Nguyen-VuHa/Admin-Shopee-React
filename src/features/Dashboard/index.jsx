@@ -1,8 +1,14 @@
+import Title from 'constants/title_global';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const DashBoardPage = () => {
     return (
         <div className="container-fluid">
+            <Helmet>
+                <title>{ Title.TITLE_DASHBOARD }</title> 
+                <meta name="description" content="Helmet application" />
+            </Helmet>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
                 <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i

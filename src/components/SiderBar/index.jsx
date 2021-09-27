@@ -14,7 +14,8 @@ const SiderBar = () => {
     
     return (
         <ul 
-            className={isToggle ? 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled' : 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'}
+            className={isToggle ? 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled' 
+            : 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'}
             id="accordionSidebar">
             <SiderBarHeader />
 
@@ -27,7 +28,7 @@ const SiderBar = () => {
             <li className="nav-item">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fab fa-product-hunt"></i>
+                    <i className="fab fa-product-hunt"></i>
                     <span>Sản Phẩm Của Shop</span>
                 </a>
                 <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">

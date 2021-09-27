@@ -7,10 +7,12 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
+import ToastMessage from 'components/ToastMessage';
 
 function App() {
     return (
 		<Suspense fallback={<div>loading . . .</div>} >
+			<ToastMessage position="top-right" autoDeleteInterval={3500}/>
 			<BrowserRouter>
 				<Switch>
 					<Redirect exact from="/" to="/dashboard"/>

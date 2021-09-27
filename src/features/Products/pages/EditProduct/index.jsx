@@ -1,21 +1,35 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import Title from 'constants/title_global';
+import { ToastContext } from 'context/toastContext';
 import EditProductForm from 'features/Products/components/EditProductForm';
 import EditProductPhoto from 'features/Products/components/EditProductPhoto';
+import { newProduct } from 'features/Products/productSlice';
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import './edit_product.scss';
-import productApi from 'api/productApi';
-
-import isEmpty from 'validator/lib/isEmpty';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import isByLength from 'validator/lib/isByteLength';
-import { useSelector } from 'react-redux';
-import { ToastContext } from 'context/toastContext';
-import {v4 as uuidv4} from 'uuid';
+import isEmpty from 'validator/lib/isEmpty';
+import './edit_product.scss';
+import { removeAllImageBs64 } from './imgProductSlice';
+import ModalLoading from 'components/ModalLoading';
+
 
 const EditProduct = () => {
-    const [validateMsg, setValidateMsg] = useState('');
+    const [isShowModal, setisShowModal] = useState(false);
+    const [validateMsg, setValidateMsg] = useState({
+        msg: {
+            name: '',
+            price: '',
+            description: '',
+        }
+    });
     const {state, dispatch} = useContext(ToastContext);
+    
     const listImage = useSelector((state) => state.imgProduct);
+    const disPatch = useDispatch();
+    const history = useHistory();
 
     const handleSaveProduct = async (objData) => {
         const isValid = validateAll(objData);
@@ -36,12 +50,42 @@ const EditProduct = () => {
             return;
         }
         if(isValid) {
+            setisShowModal(true);
             var dataPost = {
                 data: objData,
                 arrayImage: listImage
             }
-            const result = await productApi.newProduct(dataPost);
-            console.log(result);
+            const action = newProduct(dataPost);
+            var result = await disPatch(action);
+            var messageResult = unwrapResult(result);
+
+            if (messageResult.status === 'OK') {
+                setisShowModal(false);
+                dispatch({
+                    type: 'ADD_NOTIFICATION',
+                    payload: {
+                        id: uuidv4(),
+                        type: "SUCCESS",
+                        title: "Successfully!",
+                        message: "Sản phẩm đã được thêm thành công!"
+                    }
+                })
+                disPatch(removeAllImageBs64());
+                history.push('/dashboard/product/view');
+            }
+            else {
+                setisShowModal(false);
+                dispatch({
+                    type: 'ADD_NOTIFICATION',
+                    payload: {
+                        id: uuidv4(),
+                        type: "WARNING",
+                        title: "Cảnh báo!",
+                        message: messageResult.message
+                    }
+                })
+            }
+            
         }
        
     }
@@ -78,6 +122,7 @@ const EditProduct = () => {
                 <title>{ Title.TITLE_EDIT_PRODUCT }</title> 
                 <meta name="description" content="Helmet application" />
             </Helmet>
+            <ModalLoading isShowModal={isShowModal}/>
             <form className="edit-product">
                 <EditProductPhoto />
                 <EditProductForm handleSaveProduct={handleSaveProduct} validateMsg={validateMsg}/>

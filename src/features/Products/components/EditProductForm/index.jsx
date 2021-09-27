@@ -19,7 +19,7 @@ const EditProductForm = (props) => {
                 setName(value);
                 break;
             case 'description':
-                validateMsg.description = '';
+                validateMsg.description= ''
                 setDescription(value);
                 break;
             default:

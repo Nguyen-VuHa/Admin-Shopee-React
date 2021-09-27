@@ -1,0 +1,53 @@
+
+.modal.show {
+    display: block;
+    opacity: 1;
+    background: rgba(0,0,0,0.5);
+}
+
+.img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.modal-dialog-centered::before {
+    height: calc(100vh - 3.5rem);
+}
+
+.modal-content .modal-header {
+    position: relative;
+    padding: 0;
+    border: none;
+    height: 230px;
+    position: relative;
+    z-index: 0;
+}
+
+
+
+.modal-content .modal-header:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    background: #dd00ff;
+    background: -moz-linear-gradient(45deg, #dd00ff 0%, #3e65ff 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, #dd00ff), color-stop(100%, #3e65ff));
+    background: -webkit-linear-gradient(45deg, #dd00ff 0%, #3e65ff 100%);
+    background: -o-linear-gradient(45deg, #dd00ff 0%, #3e65ff 100%);
+    background: -ms-linear-gradient(45deg, #dd00ff 0%, #3e65ff 100%);
+    background: linear-gradient(45deg, #dd00ff 0%, #3e65ff 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dd00ff', endColorstr='#3e65ff', GradientType=1 );
+    z-index: -1;
+    opacity: .3; }
+
+.modal-content .modal-body {
+    border: none;
+    overflow: hidden;
+    margin-top: -230px;
+    z-index: 2;
+    color: #f8c0a6;
+}

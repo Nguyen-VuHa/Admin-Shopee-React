@@ -10,7 +10,7 @@ import './product_view.scss';
 
 const ProductView = () => {
     const allProduct = useSelector(productsSelectors.selectAll);
-    console.log(allProduct);
+    
     window.scrollTo({
         top: 0,
         behavior: "smooth",

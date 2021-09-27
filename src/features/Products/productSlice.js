@@ -1,8 +1,13 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from "@reduxjs/toolkit";
 import productApi from 'api/productApi';
 
-export const getAllProduct = createAsyncThunk('GET_ALL_PRODUCT' , async (_, { dispatch }) => { 
+export const getAllProduct = createAsyncThunk('GET_ALL_PRODUCT' , async () => { 
     const stateReponse = await productApi.getAllProduct();
+    return stateReponse;
+})
+
+export const newProduct = createAsyncThunk('ADD_PRODUCT' , async (dataPost) => { 
+    const stateReponse = await productApi.newProduct(dataPost);
     return stateReponse;
 })
 
@@ -32,6 +37,23 @@ const productSlice = createSlice({
             state.loading = false;
             state.error = '';
             productsAdapter.setAll(state, payload);
+        },
+        // ADD A PRODUCTS
+        [newProduct.pending]: (state) => {
+            state.loading = true;
+        },
+        [newProduct.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        [newProduct.fulfilled]: (state, { payload }) => {
+            state.loading = false;
+            state.error = '';
+            if(payload.status === 'OK')
+            {
+                productsAdapter.addOne(state, payload.producReponse);
+            }
+                
         },
     },
 })

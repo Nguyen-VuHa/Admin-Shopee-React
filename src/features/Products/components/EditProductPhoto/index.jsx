@@ -5,9 +5,7 @@ import EditProductPhotoItem from '../EditProductPhotoItem';
 
 const EditProductPhoto = () => {
     const dataImage = useSelector((state) => state.imgProduct);
-
-    console.log(dataImage);
-
+    
     return (
         <div className="edit-product__photo photo">
             <div className="photo__header">

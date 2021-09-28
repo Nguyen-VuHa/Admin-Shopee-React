@@ -112,16 +112,11 @@ const EditProductForm = (props) => {
                                 <textarea  
                                     className={validateMsg.description ? "input--style-4 is-invalid" : "input--style-4"} type="text" 
                                     name="description" autoComplete="off"
-                                    style={{minHeight: '400px', lineHeight: '30px'}}
+                                    style={{minHeight: '400px', lineHeight: '30px', paddingTop: '10px'}}
                                     value={description}
                                     onChange={(e) => handleChangeText(e)}
                                 />
                                 <small className="invalid-feedback">{validateMsg.description ? validateMsg.description : ''}</small>
-                            </div>
-                        </div>
-                        <div className="col-6">
-                            <div className="input-group">
-                                <label className="label">Mục thông tin bổ sung</label>
                             </div>
                         </div>
                     </div>

@@ -11,6 +11,11 @@ export const newProduct = createAsyncThunk('ADD_PRODUCT' , async (dataPost) => {
     return stateReponse;
 })
 
+export const updateStatus = createAsyncThunk('TOGGLE_STATUS_PRODUCT' , async ({idProduct, ObjUpdate}) => {
+    const stateReponse =  await productApi.updateStatus(idProduct);
+    return stateReponse , {idProduct, changes: ObjUpdate};
+})
+
 const productsAdapter = createEntityAdapter({
     selectId: (product) => product.idProduct,
 })
@@ -19,10 +24,11 @@ const productSlice = createSlice({
     name: 'products',
     initialState: productsAdapter.getInitialState({
         loading: false,
-        error: ''
+        error: '',
     }),
     reducers: {
         setAllProducts: productsAdapter.setAll,
+        toggleStatus: productsAdapter.updateOne,
     },
     extraReducers: {
         // GET ALL PRODUCTS
@@ -53,7 +59,18 @@ const productSlice = createSlice({
             {
                 productsAdapter.addOne(state, payload.producReponse);
             }
-                
+        },
+        // TOGGLLE STATUS 
+        [updateStatus.pending]: (state) => {
+            state.loading = true;
+        },
+        [updateStatus.rejected]: (state) => {
+            state.loading = false;
+        },
+        [updateStatus.fulfilled]: (state, { payload }) => {
+            state.loading = false;
+            state.error = '';
+            productsAdapter.updateOne(state, {id: payload.idProduct, changes: payload.changes})
         },
     },
 })

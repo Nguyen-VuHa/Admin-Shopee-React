@@ -12,7 +12,7 @@ import ToastMessage from 'components/ToastMessage';
 function App() {
     return (
 		<Suspense fallback={<div>loading . . .</div>} >
-			<ToastMessage position="top-right" autoDeleteInterval={3500}/>
+			<ToastMessage autoDeleteInterval={3500}/>
 			<BrowserRouter>
 				<Switch>
 					<Redirect exact from="/" to="/dashboard"/>

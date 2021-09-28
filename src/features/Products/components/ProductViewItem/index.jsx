@@ -1,7 +1,20 @@
+import { updateStatus } from 'features/Products/productSlice';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 const ProductViewItem = (props) => {
     const { product } = props;
+    const dispatch = useDispatch();
+
+    const handleChangeStatus = () => {
+        var ObjUpdate = {
+            status: (product.status === 1 ? 0 : 1),
+        }
+        dispatch(updateStatus({
+            idProduct: product.idProduct,
+            ObjUpdate
+        }));
+    }
 
     return (
         <li className="item-table">
@@ -25,7 +38,11 @@ const ProductViewItem = (props) => {
                     {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ
                 </div>
                 <div className="pd-hd context-inventory ml-2">
-                    <span className={product.status === 1 ? 'btn-status bg-success' : 'btn-status bg-danger'} style={{color: 'white'}}>
+                    <span 
+                        className={product.status === 1 ? 'btn-status bg-success' : 'btn-status bg-danger'} 
+                        style={{color: 'white'}}
+                        onClick={() => handleChangeStatus()}
+                    >
                         {product.status === 1 ? 'Còn Hàng' : 'Hết Hàng'}
                     </span>
                 </div>

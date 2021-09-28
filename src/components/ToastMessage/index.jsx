@@ -10,9 +10,9 @@ import {
 import './toast_message.scss';
 
 const ToastMessage = (props) => {
-    const { position, autoDeleteInterval } = props;
+    const { autoDeleteInterval } = props;
     const {state, dispatch} = useContext(ToastContext);
-   
+
     const generateIcon = (type) => {
         switch (type) {
             case 'INFO':
@@ -44,7 +44,7 @@ const ToastMessage = (props) => {
     }
 
     return (
-        <div className={`notification-container ${position}`}>
+        <>
             {state.map((notification, index) => {
                 if(autoDeleteInterval) {
                     setTimeout(() => {
@@ -55,28 +55,31 @@ const ToastMessage = (props) => {
                     }, autoDeleteInterval)
                 }   
                 return (
-                    <div key={notification.id}
-                        className={`notification toast ${position}`}
-                        style={{backgroundColor: `${generateBackgoundColor(notification.type)}`}}
-                    >
-                        <FaRegWindowClose 
-                            onClick={() => dispatch({type: 'DELETE_NOTIFICATION', payload: notification.id })} 
-                            className="close-btn"/>
-                        <div className="notification-image">
-                            {generateIcon(notification.type)}
-                        </div>
-                        <div>
-                            <p className="notification-tilte">
-                                { notification.title }
-                            </p>
-                            <p className="notification-message">
-                                { notification.message }
-                            </p>
+                    <div key={notification.id} className={`notification-container ${notification.position}`}>
+                        <div 
+                            className={`notification toast ${notification.position}`}
+                            style={{backgroundColor: `${generateBackgoundColor(notification.type)}`}}
+                        >
+                            <FaRegWindowClose 
+                                onClick={() => dispatch({type: 'DELETE_NOTIFICATION', payload: notification.id })} 
+                                className="close-btn"/>
+                            <div className="notification-image">
+                                {generateIcon(notification.type)}
+                            </div>
+                            <div>
+                                <p className="notification-tilte">
+                                    { notification.title }
+                                </p>
+                                <p className="notification-message">
+                                    { notification.message }
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )
             })}
-        </div>
+        </>
+       
     );
 };
 

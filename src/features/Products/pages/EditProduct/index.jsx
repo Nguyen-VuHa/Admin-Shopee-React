@@ -44,7 +44,8 @@ const EditProduct = () => {
                     id: uuidv4(),
                     type: "INFO",
                     title: "Thông báo!",
-                    message: "Cần có ít nhất 1 hình ảnh cho sản phẩm!"
+                    message: "Cần có ít nhất 1 hình ảnh cho sản phẩm!",
+                    position: "top-right",
                 }
             })
             return;
@@ -67,7 +68,8 @@ const EditProduct = () => {
                         id: uuidv4(),
                         type: "SUCCESS",
                         title: "Successfully!",
-                        message: "Sản phẩm đã được thêm thành công!"
+                        message: "Sản phẩm đã được thêm thành công!",
+                        position: "top-right",
                     }
                 })
                 disPatch(removeAllImageBs64());
@@ -81,7 +83,8 @@ const EditProduct = () => {
                         id: uuidv4(),
                         type: "WARNING",
                         title: "Cảnh báo!",
-                        message: messageResult.message
+                        message: messageResult.message,
+                        position: "top-right",
                     }
                 })
             }
@@ -95,6 +98,8 @@ const EditProduct = () => {
 
         if(isEmpty(objData.name)) {
             msg.name = "Tên sản phẩm không được để trống!"
+        } else if(isByLength(objData.name, 120)) {
+            msg.name = "Tên sản phẩm không vượt quá 120 ký tự!"
         }
 
         if(isEmpty(objData.price.toString())) {
@@ -107,7 +112,7 @@ const EditProduct = () => {
         if(isEmpty(objData.description)) {
             msg.description = "Mô tả sản phẩm không được để trống!"
         } else if(isByLength(objData.description, 3000)) {
-            msg.description = "Mô tả sản phẩm không được vượt quá 3000 ký tự!"
+            msg.description = "Mô tả sản phẩm không vượt quá 3000 ký tự!"
         }
 
         setValidateMsg(msg);

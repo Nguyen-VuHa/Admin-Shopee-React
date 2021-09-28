@@ -7,7 +7,11 @@ const productApi = {
     },
     newProduct: (data) => {
         const url =`/api/product/new-product`;
-        return axiosClient.post(url, data);
+        return axiosClient.post(url, JSON.stringify(data));
+    },
+    updateStatus: (idProduct) => {
+        const url =`/api/product/update-status`;
+        return axiosClient.post(url, JSON.stringify({idProduct}));
     }
 }
 

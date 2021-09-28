@@ -15,13 +15,16 @@ const ProductPage = () => {
     }, [dispatch]);
 
     return (
-         <Switch>
-         	<Redirect exact from={match.url} to={`${match.url}/view`} />
-            <Route path={`${match.url}/view`} component={ProductView} />
-            <Route path={`${match.url}/new-product`} component={EditProduct} />
+        <>
+            <Switch>
+                <Redirect exact from={match.url} to={`${match.url}/view`} />
+                <Route path={`${match.url}/view`} component={ProductView} />
+                <Route path={`${match.url}/new-product`} component={EditProduct} />
 
-            <Route path="*" component={PageNotFound}/>
-        </Switch>
+                <Route path="*" component={PageNotFound}/>
+            </Switch>
+        </>
+
     );
 };
 

@@ -1,10 +1,12 @@
 import { updateStatus } from 'features/Products/productSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const ProductViewItem = (props) => {
     const { product } = props;
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleChangeStatus = () => {
         var ObjUpdate = {
@@ -14,6 +16,10 @@ const ProductViewItem = (props) => {
             idProduct: product.idProduct,
             ObjUpdate
         }));
+    }
+
+    const handleUpdatePage = () => {
+        history.push(`/dashboard/product/${product.idProduct}`);
     }
 
     return (
@@ -47,8 +53,16 @@ const ProductViewItem = (props) => {
                     </span>
                 </div>
                 <div className="pd-hd context-option">
-                    <i className="fal fa-edit edit"></i>
-                    <i className="fal fa-trash-alt remove ml-3"></i>
+                    <div 
+                        className="btn-info btn-circle"
+                        onClick={() => handleUpdatePage()}
+                    >
+                        <i className="fal fa-edit edit"></i>
+                    </div>
+                    <div className="btn-danger btn-circle ml-3">
+                        <i className="fal fa-trash-alt remove"></i>
+                    </div>
+                    
                 </div>
             </div>
         </li>

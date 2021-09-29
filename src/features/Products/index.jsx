@@ -20,8 +20,11 @@ const ProductPage = () => {
                 <Redirect exact from={match.url} to={`${match.url}/view`} />
                 <Route path={`${match.url}/view`} component={ProductView} />
                 <Route path={`${match.url}/new-product`} component={EditProduct} />
+                <Route path={`${match.url}/:idProduct`} component={EditProduct} />
 
-                <Route path="*" component={PageNotFound}/>
+                <Route>
+                    <PageNotFound />
+                </Route>
             </Switch>
         </>
 

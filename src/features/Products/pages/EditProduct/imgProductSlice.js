@@ -14,10 +14,15 @@ const imgProductSlice = createSlice({
         },
         removeAllImageBs64: () => {
             return [];
+        },
+        setImageUpdate: (state, action) => {
+            state =  [];
+            state = state.concat(action.payload);
+            return state;
         }
     },
 })
 
 const { reducer, actions } = imgProductSlice;
-export const { addImageBs64, removeImageBs64, removeAllImageBs64 } = actions;
+export const { addImageBs64, removeImageBs64, removeAllImageBs64, setImageUpdate } = actions;
 export default reducer;

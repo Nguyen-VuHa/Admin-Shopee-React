@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import { productUpdateSelectors } from 'features/Products/productSlice';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import EditProductControl from '../EditProductControl';
 
 const EditProductForm = (props) => {
+    const stateProduct = useSelector(productUpdateSelectors.selectAll);
     const { handleSaveProduct, validateMsg } = props;
     const [price, setPrice] = useState(0);
     const [checked, setChecked] = useState(1);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const params = useParams();
+
+    useEffect(() => {
+        if(params.idProduct && stateProduct.length > 0)
+        {
+            setName(stateProduct[0].nameProduct);
+            setPrice(stateProduct[0].price);
+            setChecked(stateProduct[0].status);
+            setDescription(stateProduct[0].descProduct);
+        }
+    }, [stateProduct]);
 
     const handleChangeText = (e) => {
         const target = e.target;
@@ -41,11 +56,23 @@ const EditProductForm = (props) => {
     }
 
     const handleSubmitForm = () => {
-        var objData = {
-            name,
-            price,
-            description,
-            checked
+        var objData = {};
+        if(params.idProduct) {
+            objData = {
+                idProduct: params.idProduct,
+                name,
+                price,
+                description,
+                checked
+            }
+        }
+        else {
+            objData = {
+                name,
+                price,
+                description,
+                checked
+            }
         }
         handleSaveProduct(objData);
     }

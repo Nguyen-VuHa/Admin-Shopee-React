@@ -1,22 +1,23 @@
 import { unwrapResult } from '@reduxjs/toolkit';
+import ModalLoading from 'components/ModalLoading';
 import Title from 'constants/title_global';
 import { ToastContext } from 'context/toastContext';
 import EditProductForm from 'features/Products/components/EditProductForm';
 import EditProductPhoto from 'features/Products/components/EditProductPhoto';
-import { newProduct } from 'features/Products/productSlice';
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { getProductById, newProduct, productUpdateSelectors, updateProduct } from 'features/Products/productSlice';
+import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import isByLength from 'validator/lib/isByteLength';
 import isEmpty from 'validator/lib/isEmpty';
 import './edit_product.scss';
-import { removeAllImageBs64 } from './imgProductSlice';
-import ModalLoading from 'components/ModalLoading';
+import { removeAllImageBs64, setImageUpdate } from './imgProductSlice';
 
 
 const EditProduct = () => {
+   const stateProduct = useSelector(productUpdateSelectors.selectAll);
     const [isShowModal, setisShowModal] = useState(false);
     const [validateMsg, setValidateMsg] = useState({
         msg: {
@@ -30,8 +31,43 @@ const EditProduct = () => {
     const listImage = useSelector((state) => state.imgProduct);
     const disPatch = useDispatch();
     const history = useHistory();
+    const params = useParams();
 
-    const handleSaveProduct = async (objData) => {
+    useEffect(() => {
+        if(params.idProduct)
+        {
+            disPatch(getProductById(params.idProduct));
+        }
+    }, [params, disPatch]);
+
+    useEffect(() => { 
+        if(params.idProduct)
+        { 
+            if(stateProduct[0]?.HINHANH_SANPHAMs)
+            {
+                var objImg = [];
+                for(var i = 0; i <  stateProduct[0].HINHANH_SANPHAMs.length; i++)
+                {
+                    objImg.push(stateProduct[0].HINHANH_SANPHAMs[i].imageUrl);
+                }
+                disPatch(setImageUpdate(objImg));
+            }
+        }
+    }, [stateProduct]);
+    
+   
+
+    const handleSaveProduct = (objData) => {
+        if(params.idProduct) {
+            handleUpdateProduct(objData);
+        }
+        else {
+            handleNewProduct(objData);
+        }
+     
+    }
+
+    const handleNewProduct = async (objData) => {
         const isValid = validateAll(objData);
         if(listImage.length === 0){
             window.scrollTo({
@@ -90,7 +126,68 @@ const EditProduct = () => {
             }
             
         }
-       
+    }
+
+    const handleUpdateProduct = async (objData) => {
+        const isValid = validateAll(objData);
+        if(listImage.length === 0){
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+            dispatch({
+                type: 'ADD_NOTIFICATION',
+                payload: {
+                    id: uuidv4(),
+                    type: "INFO",
+                    title: "Thông báo!",
+                    message: "Cần có ít nhất 1 hình ảnh cho sản phẩm!",
+                    position: "top-right",
+                }
+            })
+            return;
+        }
+        if(isValid) {
+            setisShowModal(true);
+            var dataPost = {
+                data: objData,
+                arrayImage: listImage
+            }
+
+            const action = updateProduct(dataPost);
+            var result = await disPatch(action);
+            var messageResult = unwrapResult(result);
+
+            if (messageResult.stateReponse.status === 'OK') {
+                setisShowModal(false);
+                dispatch({
+                    type: 'ADD_NOTIFICATION',
+                    payload: {
+                        id: uuidv4(),
+                        type: "SUCCESS",
+                        title: "Successfully!",
+                        message: "Cập nhật sản phẩm thành công!",
+                        position: "top-right",
+                    }
+                })
+                disPatch(removeAllImageBs64());
+                history.push('/dashboard/product/view');
+            }
+            else {
+                setisShowModal(false);
+                dispatch({
+                    type: 'ADD_NOTIFICATION',
+                    payload: {
+                        id: uuidv4(),
+                        type: "WARNING",
+                        title: "Cảnh báo!",
+                        message: messageResult.message,
+                        position: "top-right",
+                    }
+                });
+            }
+            
+        }
     }
 
     const validateAll = (objData) => {

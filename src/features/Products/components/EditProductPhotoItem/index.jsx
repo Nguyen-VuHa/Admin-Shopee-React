@@ -1,13 +1,18 @@
 import { addImageBs64, removeImageBs64 } from 'features/Products/pages/EditProduct/imgProductSlice';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 const EditProductPhotoItem = (props) => {
     const {  dataBase64 } = props;
+
     const inputFileRef = useRef(null);
-    const [imageBase64, setimageBase64] = useState(dataBase64);
+    const [imageBase64, setimageBase64] = useState('');
     const [filePath, setfilePath] = useState('');
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setimageBase64(dataBase64);
+    }, [dataBase64]);
 
     const handleChangeInput = (e) => {
         let files = e.target.files;
@@ -51,7 +56,7 @@ const EditProductPhotoItem = (props) => {
                             className="btn-close"
                             onClick={() => handleRemoveImage()}
                         >
-                            <i class="fal fa-times-circle"></i>
+                            <i className="fal fa-times-circle"></i>
                         </div> 
                     </>
                     :

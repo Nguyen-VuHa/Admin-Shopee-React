@@ -27,7 +27,7 @@ const ProductViewItem = (props) => {
             <div className="dyamic-width">
                 <div className="context-name">
                     <div className="pd-img">
-                        <img src={product.HINHANH_SANPHAMs[0].imageUrl} alt="NotImage"/>
+                        <img src={product.HINHANH_SANPHAMs[0]?.imageUrl} alt="NotImage"/>
                     </div>
                     <div className="info-product ml-2">
                         <div className="text-name">

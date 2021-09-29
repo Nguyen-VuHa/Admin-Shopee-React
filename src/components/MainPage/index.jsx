@@ -1,6 +1,7 @@
 import Footer from 'components/Footer';
 import PageNotFound from 'components/PageNotFound';
 import TopBar from 'components/TopBar';
+import CategoryPage from 'features/Categories';
 import DashBoardPage from 'features/Dashboard';
 import ProductPage from 'features/Products';
 import React from 'react';
@@ -17,6 +18,14 @@ const MainPageAdmin = () => {
                     </Route>
                     <Route path="/dashboard/product">
                         <ProductPage />
+                    </Route>
+
+                    <Route path="/dashboard/categories">
+                        <CategoryPage />
+                    </Route>
+
+                    <Route path="*">
+                        <PageNotFound />
                     </Route>
                 </Switch>
             </div>

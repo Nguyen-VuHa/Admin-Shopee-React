@@ -22,12 +22,11 @@ const ProductPage = () => {
                 <Route path={`${match.url}/new-product`} component={EditProduct} />
                 <Route path={`${match.url}/:idProduct`} component={EditProduct} />
 
-                <Route>
+                <Route path="*">
                     <PageNotFound />
                 </Route>
             </Switch>
         </>
-
     );
 };
 

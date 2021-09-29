@@ -1,13 +1,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-
+import Title from 'constants/title_global';
 
 const PageNotFound = () => {
     return (
         <>
             <Helmet>
-                <title>Login Admin | { process.env.REACT_NAME_TITLE }</title> 
+                <title>{ Title.TITLE_PAGE_NOT_FOUND }</title> 
                 <meta name="description" content="Helmet application" />
             </Helmet>
             <div className="container-fluid" style={{marginTop: '100px'}}>

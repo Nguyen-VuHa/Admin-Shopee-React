@@ -35,7 +35,7 @@ const SiderBar = () => {
                     <div className="bg-white py-2 collapse-inner rounded">
                         <h6 className="collapse-header">Product Management:</h6>
                         <Link className="collapse-item" to="/dashboard/product">Sản Phẩm</Link>
-                        <Link className="collapse-item" to="/abc">Bộ Sưu Tập</Link>
+                        <Link className="collapse-item" to="/dashboard/categories">Bộ Sưu Tập</Link>
                     </div>
                 </div>
             </li>

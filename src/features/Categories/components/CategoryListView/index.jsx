@@ -10,10 +10,8 @@ const CategoryListView = () => {
     const stateCategory = useSelector(categoriesSelectors.selectAll);
     const stateProduct = useSelector(productsSelectors.selectAll);
 
-    const handleToggleControl = (e) => {
-        if(!document.getElementById('options').contains(e.target)) {
-            setisTooltip(!isTooltip);
-        }
+    const handleToggleControl = () => {
+        setisTooltip(!isTooltip);
     }
 
     return (
@@ -29,10 +27,12 @@ const CategoryListView = () => {
                     </div>
                     <span className="count-collection">{stateProduct.length}</span>
                 </div>
-                <div className="card-option">
+                <div className={isTooltip ? 'card-option active': 'card-option'}>
                     <div className="btn-circle btn-option">
-                        <i className="far fa-ellipsis-h"></i>
-                        <div className="group-box content-option">
+                        <i className="far fa-ellipsis-h"
+                            onClick={(e) => handleToggleControl(e, 0)}
+                        ></i>
+                        <div className={isTooltip ? 'content-option active': 'content-option'}>
                             <ul className="list-option">
                                 <li className="item-option">
                                     <i className="fal fa-edit"></i>
@@ -43,12 +43,11 @@ const CategoryListView = () => {
                     </div>
                 </div>
             </div>
-            { stateCategory && stateCategory.map((data) => {
+            { stateCategory && stateCategory.map((data, index) => {
                 return <CategoryViewItem 
                             key={data.idCategory}
-                            isTooltip={isTooltip} 
-                            handleToggleControl={handleToggleControl}
                             data={data}
+                            index={index}
                         />
             })}
             <div 
@@ -56,7 +55,7 @@ const CategoryListView = () => {
                 onClick={(e) => handleToggleControl(e)}
             ></div>
             <div className="card-box-add">
-                <Link to="/dashboard/categories" >
+                <Link to="/dashboard/categories/new-category" >
                     <div className="btn-circle btn-add-ct">
                         <i className="fal fa-plus"></i>
                     </div>

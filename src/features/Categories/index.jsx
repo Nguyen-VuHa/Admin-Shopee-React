@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { getAllCategory } from './categorySlice';
 import CategoryView from './pages/CategoryView';
+import EditCategory from './pages/EditCategory';
 
 const CategoryPage = () => {
     const match = useRouteMatch();
@@ -22,7 +23,7 @@ const CategoryPage = () => {
             <Switch>
                 <Redirect exact from={match.url} to={`${match.url}/view`} />
                 <Route path={`${match.url}/view`} component={CategoryView} />
-                <Route path={`${match.url}/new-category`} component={''} />
+                <Route path={`${match.url}/new-category`} component={EditCategory} />
                 <Route path={`${match.url}/:idCategory`} component={''} />
 
                 <Route path="*">

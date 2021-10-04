@@ -6,6 +6,11 @@ export const getAllCategory = createAsyncThunk('GET_ALL_CATEGORY' , async () => 
     return stateReponse;
 })
 
+export const newCategory = createAsyncThunk('NEW_CATEGORY' , async (dataPost) => { 
+    const stateReponse = await categoriesApi.newCategory(dataPost);
+    return stateReponse;
+})
+
 const categoriesAdapter = createEntityAdapter({
     selectId: (categories) => categories.idCategory,
 })
@@ -30,6 +35,22 @@ const categorySlice = createSlice({
             state.loading = false;
             state.error = '';
             categoriesAdapter.setAll(state, payload);
+        },
+         // NEW CATEGORY
+        [newCategory.pending]: (state) => {
+            state.loading = true;
+        },
+        [newCategory.rejected]: (state, { payload }) => {
+            state.loading = false;
+            state.error = payload;
+        },
+        [newCategory.fulfilled]: (state, { payload }) => {
+            state.loading = false;
+            state.error = '';
+            if(payload.status === 'OK')
+            {
+                categoriesAdapter.addOne(state, payload.dataReponse);
+            }
         },
     }
 })

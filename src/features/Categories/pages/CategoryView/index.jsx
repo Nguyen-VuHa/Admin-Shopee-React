@@ -16,7 +16,7 @@ const CategoryView = () => {
                     <span>{ stateCategory.length }</span>
                 </div>
                 <div className="header__right">
-                    <Link to="/dashboard/categories" className="btn btn-primary btn-user btn-block">
+                    <Link to="/dashboard/categories/new-category" className="btn btn-primary btn-user btn-block">
                         <i className="fal fa-plus mr-3"></i>
                         Bộ sưu tập mới
                     </Link>

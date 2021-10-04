@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const CategoryViewItem = (props) => {
-    const { isTooltip, handleToggleControl, data } = props;
+    const { data, index } = props;
+    const [isToolTip, setisToolTip] = useState(false);
 
     const handleOpenOption = (e) => {
-        handleToggleControl(e);
-    }
+        if(document.getElementsByClassName('card-option')[index + 1].contains(e.target)) {
+            setisToolTip(!isToolTip);
+        }
+    }   
     return (
         <div className="card-box">
             <div className="card-bg">
@@ -20,10 +23,10 @@ const CategoryViewItem = (props) => {
                     {data.countProduct}
                 </span>
             </div>
-            <div className={isTooltip ? 'card-option active': 'card-option'}>
+            <div className={isToolTip ? 'card-option active': 'card-option'}>
                 <div className="btn-circle btn-option" onClick={(e) => handleOpenOption(e)}>
                     <i className="far fa-ellipsis-h"></i>
-                    <div id="options" className={isTooltip ? 'content-option active': 'content-option'}>
+                    <div className={isToolTip ? 'content-option active': 'content-option'}>
                         <ul className="list-option">
                             <li 
                                 className="item-option item-update" 

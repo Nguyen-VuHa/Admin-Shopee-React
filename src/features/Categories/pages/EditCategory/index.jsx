@@ -1,15 +1,15 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import ModalLoading from 'components/ModalLoading';
 import { ToastContext } from 'context/toastContext';
-import { newCategory } from 'features/Categories/categorySlice';
+import { getByIdCategory, newCategory, updateCategory } from 'features/Categories/categorySlice';
 import EditCategoryControl from 'features/Categories/components/EditCategoryControl';
 import EditCategoryForm from 'features/Categories/components/EditCategoryForm';
 import EditCategoryList from 'features/Categories/components/EditCategoryList';
 import ModalListProduct from 'features/Categories/components/ModalListProdut';
 import { removeAll } from 'features/Categories/components/ModalListProdut/modalSlice';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import isByLength from 'validator/lib/isByteLength';
 import isEmpty from 'validator/lib/isEmpty';
@@ -25,12 +25,20 @@ const EditCategory = () => {
             nameProduct: '',
         }
     });
-
     const {state, dispatch} = useContext(ToastContext);
 
     const listChoose = useSelector((state) => state.modalProduct);
     const disPatch = useDispatch();
     const history = useHistory();
+    const params = useParams();
+
+    useEffect(() => {
+        if(Object.keys(params).length !== 0)
+        {
+            const action = getByIdCategory(params.idCategory);
+            disPatch(action);
+        }
+    }, [params]);
 
     const handleOpenModal = () => {
         setisShow(true);
@@ -44,7 +52,17 @@ const EditCategory = () => {
         history.push('/dashboard/categories');
     }
 
-    const handleSubmitForm = async () => {
+    const handleSubmitForm = () => {
+        if(Object.keys(params).length !== 0)
+        {
+            handleUpdateCategory();
+        }
+        else {
+            handleNewCategory();
+        }
+    }
+
+    const handleNewCategory = async () => {
         const valid = validateCategory(nameCategory);
         if(valid) {
             setisShowModal(true);
@@ -91,7 +109,43 @@ const EditCategory = () => {
                 behavior: "smooth",
             });
         }
-        
+    }
+
+    const handleUpdateCategory = async () => {
+        const valid = validateCategory(nameCategory);
+        if(valid) {
+            setisShowModal(true);
+            const action = updateCategory({
+                idCategory: params.idCategory,
+                nameCategory,
+                imageCategory: imgBase64,
+                listProduct: listChoose,
+            })
+            const result = await disPatch(action);
+            const messageResult = unwrapResult(result);
+            if(messageResult.status = 'OK')
+            {
+                setisShowModal(false);
+                dispatch({
+                    type: 'ADD_NOTIFICATION',
+                    payload: {
+                        id: uuidv4(),
+                        type: "SUCCESS",
+                        title: "Successfully!",
+                        message: "Cập nhật bộ sưu tập thành công!",
+                        position: "top-right",
+                    }
+                });
+                disPatch(removeAll());
+                history.push('/dashboard/categories');
+            }
+        }
+        else {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }
     }
 
     const validateCategory = (nameCategory) => {

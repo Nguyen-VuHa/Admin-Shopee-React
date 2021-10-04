@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-export const ToastContext = createContext()
+export const ToastContext = createContext();
 
 export const ToastContextProvider = (props) => {
     const notifications = [];

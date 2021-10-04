@@ -24,7 +24,7 @@ const CategoryPage = () => {
                 <Redirect exact from={match.url} to={`${match.url}/view`} />
                 <Route path={`${match.url}/view`} component={CategoryView} />
                 <Route path={`${match.url}/new-category`} component={EditCategory} />
-                <Route path={`${match.url}/:idCategory`} component={''} />
+                <Route path={`${match.url}/:idCategory`} component={EditCategory} />
 
                 <Route path="*">
                     <PageNotFound />

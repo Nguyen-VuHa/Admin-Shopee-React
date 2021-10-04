@@ -8,11 +8,13 @@ import './App.scss';
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
 import ToastMessage from 'components/ToastMessage';
+import QuestionModal from 'components/QuestionModal';
 
 function App() {
     return (
 		<Suspense fallback={<div>loading . . .</div>} >
 			<ToastMessage autoDeleteInterval={3500}/>
+			<QuestionModal />
 			<BrowserRouter>
 				<Switch>
 					<Redirect exact from="/" to="/dashboard"/>

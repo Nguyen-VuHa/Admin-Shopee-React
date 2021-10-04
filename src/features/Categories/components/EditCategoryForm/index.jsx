@@ -1,9 +1,21 @@
-import React, { useState, useRef } from 'react';
+import { categoryUpdateSelectors } from 'features/Categories/categorySlice';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const EditCategoryForm = (props) => {
     const { nameCategory, setnameCategory, imgBase64, setimgBase64, validateMsg } = props;
     const [files, setFiles] = useState('');
     const inputRef = useRef();
+    const categoryById = useSelector(categoryUpdateSelectors.selectAll);
+
+    useEffect(() => {
+        if(categoryById.length > 0) {
+            console.log(categoryById);
+            setimgBase64(categoryById[0].imageUrl);
+            setnameCategory(categoryById[0].nameCategory);
+        }
+    }, [categoryById]);
+
 
     const handleChangeInput = (e) => {
         var target = e.target;

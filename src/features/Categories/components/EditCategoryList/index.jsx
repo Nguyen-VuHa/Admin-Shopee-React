@@ -1,14 +1,27 @@
+import { categoryUpdateSelectors } from 'features/Categories/categorySlice';
 import { productsSelectors } from 'features/Products/productSlice';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import EditCategoryItem from '../EditCategoryItem';
+import { setAllProduct } from '../ModalListProdut/modalSlice';
 
 
 const EditCategoryList = (props) => {
     const { handleOpenModal } = props;
     const listChoose = useSelector((state) => state.modalProduct);
     const stateProdut = useSelector(productsSelectors.selectAll);
+    const categoryById = useSelector(categoryUpdateSelectors.selectAll);
+    const disPatch = useDispatch();
 
+    useEffect(() => {
+        if(categoryById.length > 0) {
+            var product = categoryById[0]?.SANPHAMs.map(item => {
+                return item.idProduct;
+            })
+            const action = setAllProduct(product);
+            disPatch(action);
+        };
+    }, [categoryById]);
     return (
         <>
             {listChoose.length > 0 ?

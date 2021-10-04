@@ -1,4 +1,5 @@
 import store from 'app/store';
+import { QuestionContextProvider } from 'context/questionContext';
 import { ToastContextProvider } from 'context/toastContext';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,7 +10,9 @@ ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
         <ToastContextProvider>
-        <App />
+          <QuestionContextProvider>
+            <App />
+          </QuestionContextProvider>
         </ToastContextProvider>
       </Provider>
   </React.StrictMode>,

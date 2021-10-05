@@ -38,7 +38,7 @@ const categoriesAdapter = createEntityAdapter({
 })
 
 const categoryUpdateAdapter = createEntityAdapter({
-    selectId: (categories) => categories.idCategory,
+    selectId: (categoryUpdate) => categoryUpdate.idCategory,
 })
 
 const categorySlice = createSlice({ 
@@ -48,7 +48,11 @@ const categorySlice = createSlice({
         error: '',
         categoryUpdate: categoryUpdateAdapter.getInitialState(),
     }),
-    reducers: { },
+    reducers: { 
+        removeAllCateUpdate: (state) => {
+            categoryUpdateAdapter.removeAll(state.categoryUpdate, {});
+        },
+    },
     extraReducers: { 
          // GET ALL CATEGORY
          [getAllCategory.pending]: (state) => {
@@ -129,5 +133,7 @@ const categorySlice = createSlice({
 
 export const categoriesSelectors = categoriesAdapter.getSelectors(state => state.categories);
 export const categoryUpdateSelectors = categoryUpdateAdapter.getSelectors(state => state.categories.categoryUpdate);
-const { reducer } = categorySlice;
+
+const { reducer, actions } = categorySlice;
+export const { removeAllCateUpdate } = actions;
 export default reducer;

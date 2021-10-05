@@ -13,8 +13,9 @@ const modalSlice = createSlice({
         removeOneProduct: (state, action) => {
             return state.filter(id => id !== action.payload);
         },
-        removeAll: () => {
-            return [];
+        removeAll: (state) => {
+            state = [];
+            return state;
         }
     },
 })

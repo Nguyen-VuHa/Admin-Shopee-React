@@ -1,7 +1,7 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import ModalLoading from 'components/ModalLoading';
 import { ToastContext } from 'context/toastContext';
-import { getByIdCategory, newCategory, updateCategory } from 'features/Categories/categorySlice';
+import { getByIdCategory, newCategory, removeAllCateUpdate, updateCategory } from 'features/Categories/categorySlice';
 import EditCategoryControl from 'features/Categories/components/EditCategoryControl';
 import EditCategoryForm from 'features/Categories/components/EditCategoryForm';
 import EditCategoryList from 'features/Categories/components/EditCategoryList';
@@ -125,6 +125,8 @@ const EditCategory = () => {
             const messageResult = unwrapResult(result);
             if(messageResult.status = 'OK')
             {
+                disPatch(removeAllCateUpdate());
+                disPatch(removeAll());
                 setisShowModal(false);
                 dispatch({
                     type: 'ADD_NOTIFICATION',
@@ -136,7 +138,6 @@ const EditCategory = () => {
                         position: "top-right",
                     }
                 });
-                disPatch(removeAll());
                 history.push('/dashboard/categories');
             }
         }

@@ -10,7 +10,6 @@ const EditCategoryForm = (props) => {
 
     useEffect(() => {
         if(categoryById.length > 0) {
-            console.log(categoryById);
             setimgBase64(categoryById[0].imageUrl);
             setnameCategory(categoryById[0].nameCategory);
         }

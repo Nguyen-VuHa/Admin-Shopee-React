@@ -3,28 +3,6 @@ export const ToastContext = createContext();
 
 export const ToastContextProvider = (props) => {
     const notifications = [];
-    // {
-    //     id: uuidv4(),
-    //     type: "SUCCESS",
-    //     title: "Successfully fected data",
-    //     message: "Successfully retrieved add posts"
-    // },
-    // {
-    //     id: uuidv4(),
-    //     type: "INFO",
-    //     title: "Infomational title",
-    //     message: "This is for your INFO"
-    // },{
-    //     id: uuidv4(),
-    //     type: "WARNING",
-    //     title: "WARNING title",
-    //     message: "This is for your WARNING"
-    // },{
-    //     id: uuidv4(),
-    //     type: "ERROR",
-    //     title: "ERROR title",
-    //     message: "This is for your ERROR"
-    // }
     
     const [state, dispatch] = useReducer((state, action) => {
         switch (action.type) {

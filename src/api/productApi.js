@@ -13,9 +13,12 @@ const productApi = {
         const url =`/api/product/new-product`;
         return axiosClient.post(url, JSON.stringify(data));
     },
-    updateStatus: (idProduct) => {
+    updateStatus: async (idProduct) => {
+        const accessToken = localStorage.getItem('accessToken');
         const url =`/api/product/update-status`;
-        return axiosClient.post(url, JSON.stringify({idProduct}));
+        return await axiosClient.post(url, JSON.stringify({idProduct}), {
+            headers: { 'Authorization':`Bearer ${accessToken}` } 
+        });
     },
     updateProduct: (dataPost) => {
         console.log(dataPost);

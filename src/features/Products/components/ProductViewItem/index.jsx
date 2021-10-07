@@ -7,15 +7,20 @@ const ProductViewItem = (props) => {
     const { product } = props;
     const dispatch = useDispatch();
     const history = useHistory();
+    const token = localStorage.getItem('accessToken');
 
     const handleChangeStatus = () => {
-        var ObjUpdate = {
-            status: (product.status === 1 ? 0 : 1),
+        if(token) {
+            var ObjUpdate = {
+                status: (product.status === 1 ? 0 : 1),
+            }
+            dispatch(updateStatus({
+                idProduct: product.idProduct,
+                ObjUpdate,
+                token,
+            }));
         }
-        dispatch(updateStatus({
-            idProduct: product.idProduct,
-            ObjUpdate
-        }));
+       
     }
 
     const handleUpdatePage = () => {

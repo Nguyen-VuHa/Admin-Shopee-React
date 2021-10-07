@@ -1,10 +1,18 @@
 import React from 'react';
 
 
-const FormControl = () => {
+const FormControl = (props) => {
+    const { handleLoginSubmit } = props;
+    const handleSubmit = () => {
+        handleLoginSubmit();
+    }
+
     return (
         <div>
-            <div className="btn btn-primary btn-user btn-block">
+            <div 
+                className="btn btn-primary btn-user btn-block"
+                onClick={() => handleSubmit()}
+            >
                 Login
             </div>
             <hr />

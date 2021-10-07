@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import FormControl from '../FormControl';
 
-const LoginForm = () => {
+const LoginForm = (props) => {
+    const { handleLoginSubmit, setemail, setpassword } = props;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     
@@ -13,9 +14,11 @@ const LoginForm = () => {
         switch (name) {
             case 'email':
                 setEmail(value);
+                setemail(value);
                 break;
             case 'password':
                 setPassword(value);
+                setpassword(value);
                 break;
             default:
                 break;
@@ -49,7 +52,7 @@ const LoginForm = () => {
                         Me</label>
                 </div>
             </div>
-            <FormControl />
+            <FormControl handleLoginSubmit={handleLoginSubmit}/>
         </form>
     );
 };
